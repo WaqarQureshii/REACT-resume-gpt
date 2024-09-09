@@ -1,5 +1,6 @@
 import streamlit as st
 from st_paywall import add_auth
+from openai import OpenAI
 
 add_auth(required=True)
 
@@ -88,7 +89,7 @@ prompt_prime9 = f"Using what you created for me with my work experience, write 5
 prompt_prime10 = f"Could you please draft a one page resume based on all the information you have now?"
 
 if submitted:
-    client=OpenAI(api_key=os.getenv("OPEN_API_KEY"))
+    client=OpenAI(api_key=st.secrets(['OPENAPI_KEY']))
 
     response = client.chat.completions.create(
         model="gpt-4o-2024-08-06",
