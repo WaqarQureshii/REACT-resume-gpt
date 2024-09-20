@@ -1,4 +1,11 @@
 import streamlit as st
+from authentication.google_auth import get_logged_in_user_email, show_login_button, show_logout_button
+
+if not st.session_state.email:
+    "not signed in"
+    st.stop()
+else:
+    st.write("pro")
 
 # from openai import OpenAI
 

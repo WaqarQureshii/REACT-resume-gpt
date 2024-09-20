@@ -28,8 +28,8 @@ premium_storage = st.Page(page="4 - react_prem_storage.py",
 
 ### --- LOGIC --- ###
 user_email = get_logged_in_user_email()
-# print(st.session_state)
-# LOGGED OUT OF GOOGLE
+
+# IF LOGGED OUT OF GOOGLE
 if not user_email:
     st.sidebar.write("Account")
     show_login_button()
@@ -37,8 +37,7 @@ if not user_email:
         [about_page]
     )
     pg.run()
-    # print(st.session_state)
-    st.stop()
+    # st.stop()
 
 # LOGGED INTO GOOGLE
 else:
