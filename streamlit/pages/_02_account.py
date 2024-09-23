@@ -8,7 +8,7 @@ import jwt
 
 from firebase_admin import auth, exceptions, credentials, initialize_app
 
-from src.main import global_state
+from streamlit.main import global_state
 
 #Initialize Google OAuth2 client
 client_id = st.secrets["client_id"]

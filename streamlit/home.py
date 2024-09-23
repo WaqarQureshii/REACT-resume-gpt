@@ -1,7 +1,7 @@
 import streamlit as st
 from authentication.google_auth import get_logged_in_user_email, show_login_button, show_logout_button
 
-from src.main import global_state
+from streamlit.main import global_state
 import pages._02_account as account
 
 def app():
