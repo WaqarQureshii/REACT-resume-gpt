@@ -1,75 +1,48 @@
 import streamlit as st
 from authentication.google_auth import get_logged_in_user_email, show_login_button, show_logout_button
-# from openai import OpenAI
 
-### --- PAGE CONFIGURATION --- ###
-about_page = st.Page(
-    page="1 - about.py",
-    title="About REACT-Resume Editor",
-    icon=":material/robot_2:"
-)
+from src.main import global_state
+import pages._02_account as account
 
-react_pro = st.Page(
-    page="2 - react_pro.py",
-    title="REACT PRO",
-    icon=":material/check_circle:"
-)
+def app():
+    print(f"before home>check email: {global_state.email}")
+    if not global_state.email:
+        account.app(global_state, inner_call=True)
+    st.header("[REACT]: *Resume Enhancement and Customization Tool*")
+    st.write("")
+    st.write("")
 
-react_premium = st.Page(
-    page="3 - react_premium.py",
-    title="REACT PREMIUM",
-    icon=":material/verified:"
-)
+    # - - - SUBHEADER: PROCESS - - -
+    sub_col1, sub_blank1, sub_col2, sub_blank1, sub_col3 = st.columns([4,1, 1,1, 4])
 
-premium_storage = st.Page(page="4 - react_prem_storage.py",
-                          title="Premium - Your information",
-                          icon=":material/verified:")
+    with sub_col1:
+        st.subheader("""Provide your assistant with your:""")
+        st.write("Interested job description")
+        st.write("Your Resume")
+
+    with sub_col2:
+        st.image("assets/home_transformation_arrow.png", caption="Detailed prompts transform your inputs")
+
+    with sub_col3:
+        st.subheader("Your Professional and Customized Output")
+        st.write("Presenting resume information concicely, using nice-appropriate language while avoiding redundancy and cliché terms")
+        #TODO use https://www.linkedin.com/pulse/how-use-chatgpt-rewrite-your-resume-10-prompts-brian-b-kim/
+                        
+    comp_col1, comp_col2, comp_col3 = st.columns(3)
+    with comp_col1:
+        st.subheader("PRO Version")
+        st.write("Have your resume edited and modified, based on your input.")
+    with comp_col2:
+        st.subheader("PREMIUM Version")
+        st.write("In addition to the benefits from Pro, you can easily store your resume inputs for your next edit instead of having to input them in for each new job description.")
 
 
-### --- LOGIC --- ###
-user_email = get_logged_in_user_email()
-
-# IF LOGGED OUT OF GOOGLE
-if not user_email:
-    st.sidebar.write("Account")
-    show_login_button()
-    pg = st.navigation(
-        [about_page]
+if __name__ == '__main__':
+    st.set_page_config(
+        page_title="REACT-Resume Assistant",
+        page_icon=":robot:",
+        layout="wide",
+        initial_sidebar_state="expanded",
     )
-    pg.run()
-    # st.stop()
-
-# LOGGED INTO GOOGLE
-else:
-    sidebarcol1, sidebarcol2 = st.sidebar.columns(2)
-    sidebarcol1.write("Account")
-    sidebarcol1.write(st.session_state.email)
-    sidebarcol1 = show_logout_button()
-    sidebarcol2.write("Account Status")
-    pg = st.navigation(
-        {"About REACT": [about_page],
-         "Available versions": [react_pro, react_premium, premium_storage]
-        }
-    )
-    pg.run()
-    # print(st.session_state)
-
-    # st.stop()
-# if not st.session_state.email:
-#     print(st.session_state)
-#     pg = st.navigation(
-#         {
-#             "REACT-Resume": [about_page]
-#         }
-#     )
-
-# else:
-#     print(st.session_state)
-#     pg = st.navigation(
-#         {
-#             "REACT-Resume": [about_page],
-#             "Paid Section": [react_pro, react_premium, premium_storage]
-#         }
-#     )
-
-# pg.run()
+    print(f"home >if __name__: {global_state.email}")
+    app()
